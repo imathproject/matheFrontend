@@ -1,0 +1,42 @@
+.navbar {
+    width: 100%;
+    display: flex;
+    align-items:flex-start;
+    justify-content: center;
+    margin-top: 2%;
+  }
+  
+  .nav-item {
+    cursor: pointer;
+    margin: 0 10px;
+    padding: 5px 10px;
+    position: relative;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+  }
+  
+  .nav-item::after {
+    content: "";
+    display: block;
+    height: 2px;
+    width: 0;
+    background: #2596be;
+    transition: width 0.3s ease;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .nav-item:hover {
+    color: #2596be;
+  }
+  
+  .nav-item.active::after,
+  .nav-item:hover::after {
+    width: 100%;
+  }
+
+  .nav-item.active {
+    color: #2596be;
+  }
+  

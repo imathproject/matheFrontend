@@ -1,0 +1,88 @@
+
+
+  .password {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2px;
+    height: 5px;
+    background: #ddd;
+    border-radius: 5px;
+    width: 100%;
+  }
+  .password:before,
+  .password:after {
+    content: "";
+    height: inherit;
+    background: transparent;
+    display: block;
+    border-color: #ddd;
+    border-style: solid;
+    border-width: 0 1px 0;
+    position: absolute;
+    width: calc(25% - 1px );
+    z-index: 10;
+  }
+  .password:before {
+    left: calc(25% );
+  }
+  .password:after {
+    right: calc(25%);
+  }
+  
+  .strength-1::-webkit-progress-value {
+    background-color: #f25f5c;
+    width: 100%;
+  }
+  .strength-2::-webkit-progress-value {
+    background-color: orange;
+    width: 100%;
+  }
+  
+  .strength-3::-webkit-progress-value {
+    background-color: #70c1b3; 
+    width: 100%;  
+  }
+  
+  .strength-4::-webkit-progress-value {
+    background-color: #084c1eba; 
+    width: 100%;  
+  }
+  
+  .strength-1,
+  .strength-0s{
+    color: #f25f5c;
+    display: flex;
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: 5px;
+  }
+  .strength-2 {
+    color: orange;
+    display: flex;
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: 5px;
+  }
+  
+  .strength-3 {
+    color: #70c1b3;
+    display: flex;
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: 5px;
+  }
+  
+  .strength-4 {
+    color: #084c1eba;
+    display: flex;
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: 5px;
+  }
+  
+  .feedback{
+    display: inherit !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }

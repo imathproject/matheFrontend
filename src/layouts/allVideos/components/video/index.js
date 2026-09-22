@@ -1,0 +1,240 @@
+import PropTypes from "prop-types";
+import SoftBox from "components/SoftBox";
+import SoftTypography from "components/SoftTypography";
+import SoftButton from "components/SoftButton";
+import { useState, useEffect } from "react";
+import "katex/dist/katex.min.css";
+import Card from "react-bootstrap/Card";
+import EditView from "../Edit";
+import MovieClip from "examples/YoutubeVideo";
+import Modal from "@mui/material/Modal";
+
+//Icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPen, faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
+import { useApi } from "api";
+
+function Video({ description, link, title, status, author, videoID, onDelete, onEdit }) {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [answerState, setAnswerState] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const api = useApi();
+  const style = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "80%",
+    height: "60%",
+    justifyContent: "center",
+    bgcolor: "#FFFFFF",
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 6,
+  };
+
+  useEffect(() => {
+    setIsEditing(false);
+    setAnswerState(false);
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [videoID]);
+
+  const handleEditVideo = () => {
+    setIsEditing(!isEditing);
+  };
+
+  const handleSaveEdit = () => {
+    setIsEditing(!isEditing);
+    onEdit();
+  };
+
+  const flexDirection = windowWidth <= 1020 ? "column" : "row";
+  const margin = windowWidth <= 1020 ? "0px" : "8px";
+  const marginBottom = windowWidth <= 1020 ? "20px" : "0px";
+
+  async function handleDeleteVideo() {
+    try {
+      const data = await api.get("material/deleteVideo/" + videoID);
+      setOpen(false);
+      onDelete(videoID);
+    } catch (error) {
+      // Handle error
+    }
+  }
+
+  const ManageVideo = () => {
+    return (
+      <SoftBox
+        width="20%"
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        mt={1}
+        sx={{
+          "@media (max-width: 1020px)": {
+            width: "100%",
+          },
+        }}
+      >
+        <SoftBox justifyContent="center" display="flex" mt={1} mb={2}>
+          <SoftButton variant="text" color="info" onClick={handleOpen}>
+            <FontAwesomeIcon icon={faTrash} size="xs" />
+            &nbsp;delete
+          </SoftButton>
+
+          <SoftButton variant="text" color="dark" onClick={handleEditVideo}>
+            <FontAwesomeIcon icon={faPen} size="xs" />
+            &nbsp;edit
+          </SoftButton>
+        </SoftBox>
+      </SoftBox>
+    );
+  };
+
+  return (
+    <div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <SoftBox sx={{ ...style }}>
+          <SoftBox
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <FontAwesomeIcon icon={faCircleExclamation} size="4x" color="#FFB200" />
+            <SoftTypography variant="h4" mt={3}>
+              {" "}
+              Are you sure you want to delete the video Nº{videoID}?{" "}
+            </SoftTypography>
+            <SoftTypography variant="h6" fontWeight="light">
+              {" "}
+              You won&apos;t be able to revert this!{" "}
+            </SoftTypography>
+
+            <SoftBox
+              mt={4}
+              display="flex"
+              flexDirection="row"
+              width="100%"
+              justifyContent="space-around"
+            >
+              <SoftButton
+                variant="gradient"
+                color="error"
+                sx={{ width: "30%" }}
+                onClick={handleDeleteVideo}
+              >
+                Yes, delete it!
+              </SoftButton>
+              <SoftButton
+                variant="gradient"
+                color="info"
+                sx={{ width: "30%" }}
+                onClick={handleClose}
+              >
+                Cancel
+              </SoftButton>
+            </SoftBox>
+          </SoftBox>
+        </SoftBox>
+      </Modal>
+      {!isEditing ? (
+        <>
+          <Card
+            border="light"
+            bg="light"
+            style={{ margin: margin, marginBottom: marginBottom, borderRadius: "4%" }}
+          >
+            <Card.Body style={{ display: "flex", flexDirection: flexDirection }}>
+              <SoftBox
+                width="25%"
+                display="flex"
+                alignItems={{ xs: "flex-start" }}
+                flexDirection="column"
+                sx={{
+                  "@media (max-width: 1020px)": {
+                    width: "100%",
+                  },
+                }}
+              >
+                {/* <SoftBox lineHeight={0}>
+          <SoftTypography variant="h6" fontWeight="bold" color="info" >
+          Video {videoID}
+          </SoftTypography>
+          </SoftBox>  */}
+                <MovieClip id={videoID} videoId={link} />
+              </SoftBox>
+              <SoftBox
+                width="60%"
+                display="flex"
+                alignItems="flex-start"
+                flexDirection="column"
+                mx={2}
+                sx={{
+                  "@media (max-width: 1020px)": {
+                    width: "100%",
+                    mt: 2,
+                  },
+                }}
+              >
+                <SoftBox lineHeight={0}>
+                  <SoftTypography variant="button" fontWeight="large" color="info">
+                    Video {videoID}: {title}
+                  </SoftTypography>
+                </SoftBox>
+                <SoftBox mb={3} lineHeight={0}>
+                  <SoftTypography variant="caption" color="info" fontWeight="medium">
+                    {author}
+                  </SoftTypography>
+                </SoftBox>
+                <SoftBox mb={1} lineHeight={0}>
+                  <SoftTypography variant="caption" fontWeight="medium">
+                    {description}
+                  </SoftTypography>
+                </SoftBox>
+              </SoftBox>
+              <ManageVideo />
+            </Card.Body>
+          </Card>
+        </>
+      ) : (
+        <EditView id={videoID} onSave={handleSaveEdit} />
+      )}
+    </div>
+  );
+}
+
+Video.propTypes = {
+  description: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  videoID: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  author: PropTypes.bool.isRequired,
+  noGutter: PropTypes.bool,
+  onDelete: PropTypes.func,
+  link: PropTypes.string,
+  videoID: PropTypes.number.isRequired,
+  onEdit: PropTypes.func.isRequired,
+};
+
+export default Video;

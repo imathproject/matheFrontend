@@ -1,0 +1,13 @@
+.modal-dialog {
+    max-width: 80vw !important; /* Set the max-width to 80% of the viewport width */
+    width: 100% !important; /* Ensure the width is always 100% for responsiveness */
+  }
+  
+  .modal {
+    z-index: 1050 !important; /* Ensure modal is above other elements */
+  }
+  
+  /* Adjust z-index of modal backdrop */
+  .modal-backdrop {
+    z-index: 1040 !important; /* Ensure modal backdrop is below modal */
+  }

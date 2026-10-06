@@ -5,6 +5,8 @@ import SoftTypography from "components/SoftTypography";
 import SoftInput from "components/SoftInput";
 import OlympicButton from "components/olympiads/OlympicButton";
 import OlympicFilters from "components/olympiads/OlympicFilters";
+import OlympicKeywordsField from "components/olympiads/OlympicKeywordsField";
+import OlympicDifficultyField from "components/olympiads/OlympicDifficultyField";
 import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
 import "katex/dist/katex.min.css";
@@ -35,6 +37,23 @@ const mimeTypeOf = (extension) =>
 // A question needs at most seven alternatives: one true and six false.
 const MAX_ALTERNATIVES = 7;
 
+// Every row gets a `key` that never leaves the browser. An unsaved alternative
+// has no id to be told apart by, and keying rows by position would hand the
+// preview state of a removed row to the one that slides into its place.
+let nextRowKey = 0;
+const newRow = (id = null, text = "") => ({ key: `alt-${nextRowKey++}`, id, text });
+
+// Accepts the `{ id, text }` rows the listings pass down and, defensively, bare
+// strings, which are treated as alternatives the server has not seen yet.
+const toRows = (answers) => {
+  if (!Array.isArray(answers) || answers.length === 0) return [newRow(), newRow()];
+  return answers.map((answer) =>
+    answer !== null && typeof answer === "object"
+      ? newRow(answer.id ?? null, String(answer.text ?? ""))
+      : newRow(null, String(answer ?? ""))
+  );
+};
+
 /**
  * The olympic question form, in both the shapes the screens ask for.
  *
@@ -52,6 +71,15 @@ const MAX_ALTERNATIVES = 7;
  * `submit(validate, { require: "filters" })` checks only the four dropdowns,
  * and `{ require: "none" }` checks nothing, which is what the two draft-saving
  * buttons did before they moved here.
+ *
+ * `initialKeywords` is the list of olympic keyword ids the question already
+ * has. Keywords are optional, so no `require` level checks them; the ids are
+ * always sent as `keywords`, and an empty array clears them on the server.
+ *
+ * `initialDifficulty` is the difficulty (1 to 5) the question already has, or
+ * nothing when it has none. The field is optional, so no `require` level checks
+ * it; it is always sent as `difficulty`, and `null` clears it on the server —
+ * an edit screen that leaves this prop out erases the difficulty on save.
  */
 function OlympicQuestionForm({
   mode = "edit",
@@ -68,6 +96,8 @@ function OlympicQuestionForm({
   initialPhase,
   initialExtension,
   initialImage,
+  initialKeywords,
+  initialDifficulty,
 }) {
   const formRef = useRef();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -76,11 +106,11 @@ function OlympicQuestionForm({
   const [year, setYear] = useState(initialYear || null);
   const [phase, setPhase] = useState(initialPhase || null);
   const [question, setQuestion] = useState(initialQuestion || "");
+  const [keywords, setKeywords] = useState(initialKeywords || []);
+  const [difficulty, setDifficulty] = useState(initialDifficulty ?? null);
   const [file, setFile] = useState(null);
   const [oldFile, setOldFile] = useState(null);
-  const [alternatives, setAlternatives] = useState(
-    initialAnswers && initialAnswers.length > 0 ? initialAnswers : ["", ""]
-  );
+  const [alternatives, setAlternatives] = useState(() => toRows(initialAnswers));
   const [errorMessage, setErrorMessage] = useState(null);
   const [showImage, setShowImage] = useState(null);
   const [fileChanged, setFileChanged] = useState(false);
@@ -134,7 +164,7 @@ function OlympicQuestionForm({
 
   const handleAddAlternative = () => {
     if (alternatives.length < MAX_ALTERNATIVES) {
-      setAlternatives([...alternatives, ""]);
+      setAlternatives([...alternatives, newRow()]);
     }
   };
 
@@ -148,7 +178,8 @@ function OlympicQuestionForm({
 
   const handleAlternativeChange = (index, value) => {
     const newAlts = [...alternatives];
-    newAlts[index] = value;
+    // Only the text changes; the id is what keeps the row the same alternative.
+    newAlts[index] = { ...newAlts[index], text: value };
     setAlternatives(newAlts);
     setValidationErrors({ ...validationErrors, alternatives: false });
   };
@@ -189,7 +220,7 @@ function OlympicQuestionForm({
     };
     if (require === "all") {
       errors.question = question.trim() === "";
-      errors.alternatives = alternatives.some((a) => a.trim() === "");
+      errors.alternatives = alternatives.some((a) => a.text.trim() === "");
     }
     setValidationErrors(errors);
     return !Object.values(errors).some((error) => error);
@@ -211,8 +242,12 @@ function OlympicQuestionForm({
       id_olympic_phase: phase?.id,
       id_olympic_year: year?.id,
       question: question,
-      alternatives: alternatives,
+      // An id tells the server to keep that alternative, a null one to create
+      // it. The row key is this form's own and stays behind.
+      alternatives: alternatives.map(({ id, text }) => ({ id, text })),
       validate: validate,
+      keywords: keywords,
+      difficulty: difficulty,
       ...extraPayload,
     };
 
@@ -275,6 +310,8 @@ function OlympicQuestionForm({
 
   const fields = (
     <>
+      <OlympicKeywordsField value={keywords} onChange={setKeywords} />
+      <OlympicDifficultyField value={difficulty} onChange={setDifficulty} />
       <SoftTypography
         sx={{ color: validationErrors.question ? COLORS.error : COLORS.brown }}
         fontWeight="bold"
@@ -334,7 +371,7 @@ function OlympicQuestionForm({
       </SoftTypography>
 
       {alternatives.map((alt, index) => (
-        <div key={index} style={{ marginBottom: "20px", width: "100%" }}>
+        <div key={alt.key} style={{ marginBottom: "20px", width: "100%" }}>
           <SoftBox display="flex" justifyContent="space-between" alignItems="center" mt={2} mb={1}>
             <SoftTypography
               sx={{ color: index === 0 ? "#56a36b" : "#cc0900" }}
@@ -354,11 +391,11 @@ function OlympicQuestionForm({
           </SoftBox>
           <SoftInput
             placeholder="Type here..."
-            value={alt}
+            value={alt.text}
             multiline
             sx={{
               border:
-                validationErrors.alternatives && alt.trim() === ""
+                validationErrors.alternatives && alt.text.trim() === ""
                   ? "1px solid red"
                   : "1px solid #ced4da",
             }}
@@ -375,7 +412,7 @@ function OlympicQuestionForm({
               <Accordion.Body>
                 <div style={{ padding: "1rem", overflowY: "auto", width: "100%" }}>
                   <SoftTypography variant="h6" fontWeight="regular">
-                    <Latex displayMode>{alt}</Latex>
+                    <Latex displayMode>{alt.text}</Latex>
                   </SoftTypography>
                 </div>
               </Accordion.Body>
@@ -492,13 +529,24 @@ OlympicQuestionForm.propTypes = {
   actions: PropTypes.func.isRequired,
   extraPayload: PropTypes.object,
   initialQuestion: PropTypes.string,
-  initialAnswers: PropTypes.array,
+  // `{ id, text }` rows, the true answer first. A bare string is still taken,
+  // as an alternative without an id.
+  initialAnswers: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({ id: PropTypes.number, text: PropTypes.string }),
+    ])
+  ),
   initialOlympic: PropTypes.object,
   initialLevel: PropTypes.object,
   initialYear: PropTypes.object,
   initialPhase: PropTypes.object,
   initialExtension: PropTypes.string,
   initialImage: PropTypes.string,
+  // Ids of the olympic keywords the question already has.
+  initialKeywords: PropTypes.array,
+  // The difficulty (1 to 5) the question already has; left out when it has none.
+  initialDifficulty: PropTypes.number,
 };
 
 export default OlympicQuestionForm;

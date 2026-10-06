@@ -49,7 +49,7 @@ function OlympicModal({ open, onClose, title, children, closeLabel = "Close" }) 
           <SoftTypography id="olympic-modal-title" variant="title" fontWeight="bold">
             {title}
           </SoftTypography>
-          <OlympicButton variant="text" tone="neutral" onClick={onClose}>
+          <OlympicButton variant="text" tone="neutral" color="dark" onClick={onClose}>
             <SoftTypography mr={1} variant="title" fontWeight="bold">
               {closeLabel}
             </SoftTypography>

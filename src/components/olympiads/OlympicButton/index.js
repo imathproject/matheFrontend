@@ -68,13 +68,17 @@ const PALETTES = {
  * `tone="neutral"` opts out of the palettes and leaves SoftButton's own styling
  * alone: that is the shape a Cancel sitting next to a destructive action wants.
  * `tone="danger"` is the destructive action itself.
+ *
+ * A neutral button defaults to `color="dark"`: SoftButton's own default is
+ * white, which draws an outlined or text button white on white.
  */
-function OlympicButton({ children, variant = "contained", tone = "brand", sx, ...rest }) {
+function OlympicButton({ children, variant = "contained", tone = "brand", color, sx, ...rest }) {
   const palette = PALETTES[tone];
   const toneSx = palette ? palette[variant] || palette.contained : null;
+  const colorProps = color || tone === "neutral" ? { color: color || "dark" } : {};
 
   return (
-    <SoftButton variant={variant} sx={{ ...toneSx, ...sx }} {...rest}>
+    <SoftButton variant={variant} sx={{ ...toneSx, ...sx }} {...colorProps} {...rest}>
       {children}
     </SoftButton>
   );
@@ -84,6 +88,7 @@ OlympicButton.propTypes = {
   children: PropTypes.node,
   variant: PropTypes.oneOf(["text", "contained", "outlined", "gradient"]),
   tone: PropTypes.oneOf(["brand", "danger", "neutral"]),
+  color: PropTypes.string,
   sx: PropTypes.object,
 };
 

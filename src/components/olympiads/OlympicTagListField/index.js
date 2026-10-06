@@ -41,6 +41,8 @@ function OlympicTagListField({
   onAdd,
   onUpdate,
   onDelete,
+  required,
+  error,
 }) {
   // Which chip is currently open for renaming, and what the two inputs have
   // refused so far. Errors are cleared as soon as the offending text changes.
@@ -102,8 +104,8 @@ function OlympicTagListField({
 
   return (
     <SoftBox mt={2}>
-      <SoftTypography fontWeight="bold" sx={{ color: COLORS.brown }}>
-        {title}
+      <SoftTypography fontWeight="bold" sx={{ color: error ? COLORS.error : COLORS.brown }}>
+        {required ? `${title} *` : title}
       </SoftTypography>
       <SoftTypography variant="caption" color="text" sx={{ display: "block", mb: 1.5 }}>
         {description}
@@ -202,6 +204,12 @@ function OlympicTagListField({
         </SoftBox>
       )}
 
+      {error && (
+        <SoftTypography variant="caption" color="error" sx={{ display: "block", mb: 1 }}>
+          {`Add at least one ${fieldName.toLowerCase()}.`}
+        </SoftTypography>
+      )}
+
       {editError && (
         <SoftTypography variant="caption" color="error" sx={{ display: "block", mb: 1 }}>
           {editError}
@@ -268,10 +276,16 @@ OlympicTagListField.propTypes = {
   onAdd: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  /** Marks the heading with an asterisk: the list cannot be saved empty. */
+  required: PropTypes.bool,
+  /** The list was submitted empty. */
+  error: PropTypes.bool,
 };
 
 OlympicTagListField.defaultProps = {
   newValue: "",
+  required: false,
+  error: false,
 };
 
 export default OlympicTagListField;

@@ -59,10 +59,13 @@ const CONFIRM_SHEET = {
 /**
  * The olympiad form, both for creating one and for editing an existing one.
  *
- * `mode` picks what Save does. "create" posts a new olympiad, then uploads its
- * logo and adds its levels / years / phases under the id the server hands back.
+ * `mode` picks what Save does. "create" posts a new olympiad along with its
+ * levels / years / phases, then uploads its logo under the id the server hands back.
  * "edit" updates `olympic` and replays what was done to the three lists on
  * screen: removals, additions and renames all wait for Save.
+ *
+ * Levels, years and phases are required: neither mode saves while one of the
+ * three lists is empty, and the server refuses it as well.
  *
  * `onSave` is called once everything is through — and in "edit" also after the
  * olympiad has been deleted — so the listing can close its sheet and refetch.
@@ -161,6 +164,9 @@ function OlympicForm({ mode = "create", olympic = {}, onSave }) {
     name: false,
     link: false,
     language: false,
+    levels: false,
+    years: false,
+    phases: false,
   });
 
   function handleChangeFile(e) {
@@ -204,6 +210,7 @@ function OlympicForm({ mode = "create", olympic = {}, onSave }) {
       };
       setTags((current) => ({ ...current, [field]: [...current[field], item] }));
       setNewTags((current) => ({ ...current, [field]: "" }));
+      setValidationErrors((current) => ({ ...current, [field]: false }));
     },
     // `label` keeps what the server holds, which is how Save spots a rename.
     onUpdate: (item) =>
@@ -236,6 +243,9 @@ function OlympicForm({ mode = "create", olympic = {}, onSave }) {
       link: olympicLink.trim() === "",
       language: olympicLanguage.trim() === "",
     };
+    TAG_FIELDS.forEach((field) => {
+      errors[field] = !tags[field].some((item) => item.edited.trim() !== "");
+    });
     setValidationErrors(errors);
     return !Object.values(errors).some((error) => error);
   };
@@ -252,15 +262,8 @@ function OlympicForm({ mode = "create", olympic = {}, onSave }) {
   };
 
   const saveTags = async (id) => {
-    // Removals are sent first, so a name removed and added back is never on the
-    // server twice at once.
-    await Promise.all(
-      TAG_FIELDS.flatMap((field) =>
-        removedTags[field].map((tagId) =>
-          api.delete(`olympic/${TAG_ENDPOINTS[field]}/delete/${tagId}`)
-        )
-      )
-    );
+    // Additions are sent first: the server refuses to delete the last entry of
+    // a list, so the replacements have to be there before the removals.
     await Promise.all(
       TAG_FIELDS.flatMap((field) => {
         const name = TAG_ENDPOINTS[field];
@@ -275,13 +278,28 @@ function OlympicForm({ mode = "create", olympic = {}, onSave }) {
         });
       })
     );
+    await Promise.all(
+      TAG_FIELDS.flatMap((field) =>
+        removedTags[field].map((tagId) =>
+          api.delete(`olympic/${TAG_ENDPOINTS[field]}/delete/${tagId}`)
+        )
+      )
+    );
   };
 
   const persist = async () => {
     const fields = { name: olympicName, active: 1, language: olympicLanguage, link: olympicLink };
     let { id } = olympic;
     if (mode === "create") {
-      const response = await api.post("olympic/add", { ...fields, imageUrl: null });
+      // The three lists go with the olympiad itself, so it is never created
+      // without them.
+      const lists = Object.fromEntries(
+        TAG_FIELDS.map((field) => [
+          field,
+          tags[field].map((item) => item.edited.trim()).filter((value) => value !== ""),
+        ])
+      );
+      const response = await api.post("olympic/add", { ...fields, ...lists, imageUrl: null });
       id = response.data.element.id;
     }
 
@@ -301,7 +319,7 @@ function OlympicForm({ mode = "create", olympic = {}, onSave }) {
       await api.put("olympic/update", { id, ...fields, imageUrl });
     }
 
-    await saveTags(id);
+    if (mode === "edit") await saveTags(id);
   };
 
   const saveOlympic = async () => {
@@ -317,7 +335,12 @@ function OlympicForm({ mode = "create", olympic = {}, onSave }) {
       onSave();
     } catch (error) {
       console.error("Error saving Olympiad:", error);
-      setErrorMessage("Failed to save Olympiad. Please try again.");
+      const data = error.response?.data;
+      setErrorMessage(
+        data?.message ||
+          (typeof data?.elements === "string" && data.elements) ||
+          "Failed to save Olympiad. Please try again."
+      );
       formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
@@ -567,6 +590,8 @@ function OlympicForm({ mode = "create", olympic = {}, onSave }) {
             key={field}
             {...OLYMPIAD_FIELD_COPY[field]}
             {...tagHandlers(field)}
+            required
+            error={validationErrors[field]}
           />
         ))}
 

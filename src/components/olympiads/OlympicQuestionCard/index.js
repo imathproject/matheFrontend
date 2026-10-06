@@ -14,6 +14,7 @@ import Card from 'react-bootstrap/Card';
 import { useApi } from 'api';
 import Modal from '@mui/material/Modal';
 import COLORS from "components/olympiads/colors";
+import { useTranslation } from "react-i18next";
 //Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faPen, faCircleExclamation } from '@fortawesome/free-solid-svg-icons'
@@ -28,7 +29,8 @@ import { faTrash, faPen, faCircleExclamation } from '@fortawesome/free-solid-svg
  * while the author's own listing grants it only for a question that has not
  * been approved yet. The server enforces its own owner check either way.
  */
-function OlympicQuestionCard({ question, status, questionID, onDelete, answers, onEdit, extension, image, olympicName, levelName, yearName, phaseName, olympicObj, levelObj, yearObj, phaseObj, canManage }) {
+function OlympicQuestionCard({ question, status, questionID, onDelete, answers, onEdit, extension, image, olympicName, levelName, yearName, phaseName, olympicObj, levelObj, yearObj, phaseObj, canManage, keywords, difficulty, showStatus = true }) {
+  const { t } = useTranslation();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -99,8 +101,8 @@ function OlympicQuestionCard({ question, status, questionID, onDelete, answers, 
         flexDirection="column"
         justifyContent="space-between"
       >
-        <OlympicStatusBadge status={statusValue} />
-        <SoftBox justifyContent="center" display="flex" mt={2} mb={2}>
+        {showStatus && <OlympicStatusBadge status={statusValue} />}
+        <SoftBox justifyContent="center" display="flex" mt={showStatus ? 2 : 0} mb={2}>
           {canManage ?
             <OlympicButton variant="text" onClick={() => { handleOpen() }}>
               <FontAwesomeIcon icon={faTrash} size="xs" />&nbsp;delete
@@ -130,7 +132,7 @@ function OlympicQuestionCard({ question, status, questionID, onDelete, answers, 
           if (index != 0) color = "#fec4c1";
           return (
             <SoftBox
-              key={index}
+              key={item.id ?? index}
               mt={1}
               border={1}
               borderRadius={10}
@@ -142,7 +144,7 @@ function OlympicQuestionCard({ question, status, questionID, onDelete, answers, 
                 </SoftTypography>
               </SoftBox>
               <SoftTypography variant="button" fontWeight="regular" color="#344767" m={1}>
-                <Latex>{item}</Latex>
+                <Latex>{item.text || ""}</Latex>
               </SoftTypography>
             </SoftBox>
           )
@@ -255,6 +257,15 @@ function OlympicQuestionCard({ question, status, questionID, onDelete, answers, 
                     </SoftTypography>
                   </SoftTypography>
                 </SoftBox>
+
+                <SoftBox mb={1} lineHeight={0}>
+                  <SoftTypography variant="caption" sx={{ color: COLORS.brown }} fontWeight="medium">
+                    {t("olympic_questions_page.difficulty", "Difficulty")}:&nbsp;&nbsp;&nbsp;
+                    <SoftTypography variant="caption" fontWeight="medium">
+                      {difficulty ?? "—"}
+                    </SoftTypography>
+                  </SoftTypography>
+                </SoftBox>
               </SoftBox>
 
               <SoftBox mr={2}
@@ -308,6 +319,8 @@ function OlympicQuestionCard({ question, status, questionID, onDelete, answers, 
           initialPhase={phaseObj}
           initialExtension={extension}
           initialImage={image}
+          initialKeywords={keywords}
+          initialDifficulty={difficulty}
           actions={(submit) =>
             statusValue === 1 ? (
               // Editing an approved question re-approves it. Sending it back
@@ -356,15 +369,29 @@ OlympicQuestionCard.propTypes = {
   questionID: PropTypes.number.isRequired,
   status: PropTypes.number,
   onDelete: PropTypes.func,
-  answers: PropTypes.array.isRequired,
+  // `{ id, text }` rows, the true answer first. The id is what lets the form
+  // save an alternative without the server issuing it a new one.
+  answers: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      text: PropTypes.string,
+    })
+  ).isRequired,
   onEdit: PropTypes.func.isRequired,
   extension: PropTypes.string,
   image: PropTypes.string,
-  canManage: PropTypes.bool
+  canManage: PropTypes.bool,
+  keywords: PropTypes.array,
+  // 1 to 5, or null when the question has no difficulty set.
+  difficulty: PropTypes.number,
+  showStatus: PropTypes.bool,
 };
 
 OlympicQuestionCard.defaultProps = {
-  canManage: false
+  canManage: false,
+  keywords: [],
+  difficulty: null,
+  showStatus: true,
 };
 
 export default OlympicQuestionCard;

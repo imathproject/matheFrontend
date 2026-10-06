@@ -1,10 +1,15 @@
 {
-  "short_name": "Soft UI Dashboard",
-  "name": "Soft UI Dashboard React",
+  "short_name": "MathE",
+  "name": "MathE - Mathematics for Every Learner",
   "icons": [
     {
       "src": "favicon.png",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo512.png",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ],

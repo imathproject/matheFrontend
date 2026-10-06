@@ -64,6 +64,7 @@ import { ProtectedRoute } from "./protectedRoutes";
 import { ROLES } from "constants/roles";
 import Performance from "layouts/performance";
 import ProjectInformation from "layouts/projectInformation";
+import OlympicProjectInformation from "layouts/olympicProjectInformation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faList,
@@ -451,6 +452,19 @@ const adminRoutes = [
     component: (
       <ProtectedRoute allowedRoles={[ROLES.ADMIN]}>
         <ProjectInformation />
+      </ProtectedRoute>
+    ),
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Project Information",
+    key: "Olympiads-ProjectInformation",
+    route: "/Olympiads-ProjectInformation",
+    icon: faDatabase,
+    component: (
+      <ProtectedRoute allowedRoles={[ROLES.ADMIN]}>
+        <OlympicProjectInformation />
       </ProtectedRoute>
     ),
     noCollapse: true,

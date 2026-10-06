@@ -142,11 +142,11 @@ function Sidenav({ color, brand, brandName, routes, onSignOut, ...rest }) {
 
   const cleanedRoutes = filteredRoutes.filter((route, index, array) => {
     if (route.type === "title") {
-      // Find if there's any non-title/non-divider item before the next title
+      // Find if there's any visible item (not divider, not hidden "none" route) before the next title
       let hasItem = false;
       for (let i = index + 1; i < array.length; i++) {
         if (array[i].type === "title") break;
-        if (array[i].type !== "divider") {
+        if (array[i].type !== "divider" && array[i].type !== "none") {
           hasItem = true;
           break;
         }

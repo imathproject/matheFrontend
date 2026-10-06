@@ -400,7 +400,16 @@
     "no_questions_for_olympiad": "This olympiad has no validated questions yet, so no test can be generated."
   },
   "olympic_questions_page": {
-    "title": "Olympiads Questions"
+    "title": "Olympiads Questions",
+    "keywords": "Keywords",
+    "keywords_placeholder": "Select keywords",
+    "keywords_hint": "Choose the subjects this question covers.",
+    "keywords_empty": "No keywords available",
+    "difficulty": "Difficulty",
+    "difficulty_hint": "Optional. Click the selected value again to clear it.",
+    "difficulty_easier": "Easier",
+    "difficulty_hardest": "Most difficult",
+    "difficulty_not_set": "Not set"
   },
   "olympics_page": {
     "title": "Olympiads"
@@ -428,6 +437,8 @@
     "my_performance": "My performance",
     "global_performance": "Global performance",
     "select_olympiad": "Please select the Olympiad",
+    "performance_per_olympiad_hint": "Your percentage of correct answers in each olympiad, side by side, so you can see where you did best.",
+    "performance_per_year_hint": "Your percentage of correct answers in a single olympiad, broken down by year. Use the selector to switch olympiad.",
     "performance_evolution_hint": "How your score changed over time. Choose whether each point on the timeline groups your answers by the month you gave them or by olympiad phase.",
     "answer_month": "Month answered",
     "evolution_by_month": "By month",

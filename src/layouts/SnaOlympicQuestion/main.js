@@ -61,8 +61,8 @@ function Main() {
 
       const url =
         filterData && filterData.id_olympic
-          ? `olympicQuestion/getMine/${filterData.id_olympic}`
-          : `olympicQuestion/getMine`;
+          ? `olympicQuestion/getUserQuestions/${filterData.id_olympic}`
+          : `olympicQuestion/getUserQuestions`;
 
       const data = await api.get(url, { params });
       setQuestions(data.data.elements || []);
@@ -159,7 +159,12 @@ function Main() {
               status={key.validate}
               questionID={key.id}
               onDelete={handleDeleteQuestion}
-              answers={key.alternatives ? key.alternatives.map((alt) => alt.text) : []}
+              // The ids travel with the texts so an edit keeps them on the server.
+              answers={
+                key.alternatives
+                  ? key.alternatives.map((alt) => ({ id: alt.id, text: alt.text }))
+                  : []
+              }
               onEdit={handleSaveQuestion}
               // The author owns a question until it is judged: a draft or a
               // rejected one is still theirs to fix or remove, an approved or
@@ -167,6 +172,8 @@ function Main() {
               canManage={[2, 3].includes(Number(key.validate))}
               extension={key.file_ext}
               image={key.file_name}
+              keywords={key.keywords || []}
+              difficulty={key.difficulty ?? null}
             />
           ))
         )}

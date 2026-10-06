@@ -184,7 +184,7 @@ function Main() {
             <SoftTypography variant="title" fontWeight="bold" sx={{ color: colors.brown }}>
               Edit Olympiad
             </SoftTypography>
-            <OlympicButton variant="text" tone="neutral" onClick={handleClose}>
+            <OlympicButton variant="text" tone="neutral" color="dark" onClick={handleClose}>
               <SoftTypography mr={1} variant="title" fontWeight="bold">Close</SoftTypography>
               <FontAwesomeIcon icon={faX} size="4x" />
             </OlympicButton>
@@ -206,7 +206,7 @@ function Main() {
             <SoftTypography variant="title" fontWeight="bold" sx={{ color: colors.brown }}>
               Add Olympiad
             </SoftTypography>
-            <OlympicButton variant="text" tone="neutral" onClick={handleAddClose}>
+            <OlympicButton variant="text" tone="neutral" color="dark" onClick={handleAddClose}>
               <SoftTypography mr={1} variant="title" fontWeight="bold">Close</SoftTypography>
               <FontAwesomeIcon icon={faX} size="4x" />
             </OlympicButton>

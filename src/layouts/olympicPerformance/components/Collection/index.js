@@ -92,6 +92,14 @@ function Collection() {
         </Card>
 
         <CardContent>
+          <SoftBox px={2} mb={1}>
+            <SoftTypography variant="caption" sx={{ color: colors.brown }}>
+              {t(
+                "olympiads_performance_page.performance_per_olympiad_hint",
+                "Your percentage of correct answers in each olympiad, side by side, so you can see where you did best."
+              )}
+            </SoftTypography>
+          </SoftBox>
           <Grid container justifyContent="center">
             <BarChart />
           </Grid>
@@ -117,6 +125,14 @@ function Collection() {
         </SoftBox>
 
         <CardContent>
+          <SoftBox px={2} mb={1}>
+            <SoftTypography variant="caption" sx={{ color: colors.brown }}>
+              {t(
+                "olympiads_performance_page.performance_per_year_hint",
+                "Your percentage of correct answers in a single olympiad, broken down by year. Use the selector to switch olympiad."
+              )}
+            </SoftTypography>
+          </SoftBox>
           <Grid container justifyContent="center">
             <BarSubtopics />
           </Grid>

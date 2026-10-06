@@ -159,10 +159,13 @@ function Main() {
               status={key.validate}
               questionID={key.id}
               onDelete={handleDeleteQuestion}
-              answers={key.alternatives ? key.alternatives.map(alt => alt.text) : []}
+              // The ids travel with the texts so a review keeps them on the server.
+              answers={key.alternatives ? key.alternatives.map(alt => ({ id: alt.id, text: alt.text })) : []}
               onEdit={handleSaveQuestion}
               extension={key.file_ext}
               image={key.file_name}
+              keywords={key.keywords || []}
+              difficulty={key.difficulty ?? null}
             />
           ))
         )}

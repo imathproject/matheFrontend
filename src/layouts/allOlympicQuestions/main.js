@@ -161,13 +161,17 @@ function Main({ canEdit }) {
             yearObj={key.olympic_year ? { id: key.olympic_year.id, label: key.olympic_year.year } : null}
             phaseObj={key.olympic_phase ? { id: key.olympic_phase.id, label: key.olympic_phase.phase } : null}
             status={key.validate}
+            showStatus={false}
             questionID={key.id}
             onDelete={handleDeleteQuestion}
-            answers={key.alternatives ? key.alternatives.map(alt => alt.text) : []}
+            // The ids travel with the texts so an edit keeps them on the server.
+            answers={key.alternatives ? key.alternatives.map(alt => ({ id: alt.id, text: alt.text })) : []}
             onEdit={handleSaveQuestion}
             canManage={canEdit}
             extension={key.file_ext}
             image={key.file_name}
+            keywords={key.keywords || []}
+            difficulty={key.difficulty ?? null}
           />
         ))
       )}

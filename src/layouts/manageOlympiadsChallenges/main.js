@@ -170,7 +170,7 @@ function Main({ onViewResults }) {
             <SoftTypography variant="title" fontWeight="bold" sx={{ color: colors.brown }}>
               Add Olympiads Challenge
             </SoftTypography>
-            <OlympicButton variant="text" tone="neutral" onClick={handleCloseAddModal}>
+            <OlympicButton variant="text" tone="neutral" color="dark" onClick={handleCloseAddModal}>
               <SoftTypography mr={1} variant="title" fontWeight="bold">
                 Close
               </SoftTypography>
@@ -204,7 +204,7 @@ function Main({ onViewResults }) {
             <SoftTypography variant="title" fontWeight="bold" sx={{ color: colors.brown }}>
               {isFinished ? "Verify Olympiads Challenge Information" : "Edit Olympiads Challenge"}
             </SoftTypography>
-            <OlympicButton variant="text" tone="neutral" onClick={handleCloseEditModal}>
+            <OlympicButton variant="text" tone="neutral" color="dark" onClick={handleCloseEditModal}>
               <SoftTypography mr={1} variant="title" fontWeight="bold">
                 Close
               </SoftTypography>

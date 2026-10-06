@@ -28,7 +28,7 @@ function ReviewerOlympics({ onBack }) {
       try {
         const [olympics, reviewerOlympics] = await Promise.all([
           api.get("olympic/getAll"),
-          api.get("olympicQuestion/getMyReviewerOlympics"),
+          api.get("olympicQuestion/getUserReviewerOlympics"),
         ]);
         setOptions(olympics.data.elements);
         setSelected(reviewerOlympics.data.elements.olympicIds);
@@ -55,7 +55,7 @@ function ReviewerOlympics({ onBack }) {
 
     setSaving(true);
     try {
-      const response = await api.post("olympicQuestion/updateMyReviewerOlympics", {
+      const response = await api.post("olympicQuestion/updateUserReviewerOlympics", {
         olympics: selected,
       });
       // What the server kept, which drops any olympiad that no longer exists.

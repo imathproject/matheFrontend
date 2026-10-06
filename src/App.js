@@ -305,7 +305,7 @@ export default function App() {
           path="/homePage"
           element={isLoggedIn ? <Navigate to="/welcome" /> : <HomePage />}
         />
-        {getRoutes(routes)}
+        {getRoutes(routes ?? studentRoutes)}
         {getIndexRoute()}
         <Route exact path="/news/:id" element={<NewsDetail />} />
         <Route exact path="/confirmEmail" element={<ConfirmEmail />} />

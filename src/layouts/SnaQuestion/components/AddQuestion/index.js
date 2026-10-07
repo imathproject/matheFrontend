@@ -13,6 +13,16 @@ import "katex/dist/katex.min.css";
 import Latex from "react-latex-next";
 import { MuiFileInput } from "mui-file-input";
 
+// Two equal columns that stack on small screens
+const twoColumns = {
+  display: "grid",
+  gridTemplateColumns: "1fr 1fr",
+  columnGap: 2,
+  "@media (max-width: 600px)": {
+    gridTemplateColumns: "1fr",
+  },
+};
+
 function AddQuestion({ onSave }) {
   const validationMessageRef = useRef();
   const [topic, setTopic] = useState(null);
@@ -39,6 +49,12 @@ function AddQuestion({ onSave }) {
     subtopic: false,
     keywords: false,
   });
+  const answers = [
+    { key: "a1", label: "Correct answer*", value: a1, setValue: setA1, correct: true },
+    { key: "a2", label: "Incorrect answer*", value: a2, setValue: setA2, correct: false },
+    { key: "a3", label: "Incorrect answer*", value: a3, setValue: setA3, correct: false },
+    { key: "a4", label: "Incorrect answer*", value: a4, setValue: setA4, correct: false },
+  ];
 
   function handleChangeFile(e) {
     if (e == null) {
@@ -197,207 +213,132 @@ function AddQuestion({ onSave }) {
           topicError={validationErrors.topic}
           keywordsError={validationErrors.keywords}
         >
-        <SoftTypography color={validationErrors.question ? "error" : "info"} fontWeight="bold">
-          Question*
-        </SoftTypography>
-        <SoftInput
-          placeholder="Type here..."
-          multiline
-          sx={{ border: validationErrors.question ? "1px solid red" : "1px solid #ced4da" }}
-          rows={12}
-          onChange={(e) => {
-            setQuestion(e.target.value);
-            setValidationErrors({ ...validationErrors, question: false });
-            if (e.target.value == "") setValidationErrors({ ...validationErrors, question: true });
-          }}
-        />
-        <Accordion style={{ marginBottom: "50px" }}>
-          <Accordion.Item eventKey="0">
-            <Accordion.Header>
-              <SoftTypography color="dark" ml={2}>
-                Question preview
-              </SoftTypography>
-            </Accordion.Header>
-            <Accordion.Body>
-              <div style={{ padding: "1rem", overflowY: "auto", width: "100%" }}>
-                <SoftTypography variant="h6" fontWeight="regular">
-                  <Latex displayMode>{question}</Latex>
-                </SoftTypography>
-              </div>
-            </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
-
-        <SoftTypography color="info" fontWeight="bold">
-          Question resources
-        </SoftTypography>
-        <SoftBox width="100%" mr={1}>
-          <MuiFileInput
-            value={file}
-            fullWidth
-            hideSizeText
-            sx={{ mb: 2, borderRadius: 2 }}
+          <SoftTypography color={validationErrors.question ? "error" : "info"} fontWeight="bold">
+            Question*
+          </SoftTypography>
+          <SoftInput
+            placeholder="Type here..."
+            multiline
+            sx={{ border: validationErrors.question ? "1px solid red" : "1px solid #ced4da" }}
+            rows={8}
             onChange={(e) => {
-              handleChangeFile(e);
+              setQuestion(e.target.value);
+              setValidationErrors({ ...validationErrors, question: false });
+              if (e.target.value == "")
+                setValidationErrors({ ...validationErrors, question: true });
             }}
           />
-        </SoftBox>
-        <SoftBox
-          mx={1}
-          mb={1}
-          sx={{ width: "100%", display: "flex", justifyContent: "center", alignContents: "center" }}
-        >
-          {file && <img src={showImage} width="50%" style={{ borderRadius: "10px" }} />}
-        </SoftBox>
+          <Accordion style={{ marginBottom: "24px" }}>
+            <Accordion.Item eventKey="0">
+              <Accordion.Header>
+                <SoftTypography color="dark" variant="button" fontWeight="regular" ml={2}>
+                  Question preview
+                </SoftTypography>
+              </Accordion.Header>
+              <Accordion.Body>
+                <div style={{ padding: "1rem", overflowY: "auto", width: "100%" }}>
+                  <SoftTypography variant="h6" fontWeight="regular">
+                    <Latex displayMode>{question}</Latex>
+                  </SoftTypography>
+                </div>
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
 
-        <SoftTypography color="info" fontWeight="bold" sx={{ mb: 3 }}>
-          Question Level*
-        </SoftTypography>
-        <SoftBox>
-          <SoftBox sx={{ display: "flex", justifyContent: "space-between" }}>
-            <SoftTypography variant="body2" fontWeight="bold">
-              Easier
-            </SoftTypography>
-            <SoftTypography variant="body2" fontWeight="bold">
-              Most difficult
-            </SoftTypography>
+          <SoftBox sx={twoColumns}>
+            <SoftBox sx={{ minWidth: 0 }}>
+              <SoftTypography color="info" fontWeight="bold">
+                Question resources
+              </SoftTypography>
+              <MuiFileInput
+                value={file}
+                fullWidth
+                hideSizeText
+                placeholder="Choose a file..."
+                sx={{ mb: 2, borderRadius: 2 }}
+                onChange={(e) => {
+                  handleChangeFile(e);
+                }}
+              />
+              {file && showImage && (
+                <SoftBox mb={2} sx={{ display: "flex", justifyContent: "center" }}>
+                  <img
+                    src={showImage}
+                    style={{ maxWidth: "100%", maxHeight: "240px", borderRadius: "10px" }}
+                  />
+                </SoftBox>
+              )}
+            </SoftBox>
+            <SoftBox sx={{ minWidth: 0 }}>
+              <SoftTypography color="info" fontWeight="bold">
+                Question level*
+              </SoftTypography>
+              <SoftBox px={1}>
+                <SoftBox sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <SoftTypography variant="caption" fontWeight="bold">
+                    Easier
+                  </SoftTypography>
+                  <SoftTypography variant="caption" fontWeight="bold">
+                    Most difficult
+                  </SoftTypography>
+                </SoftBox>
+                <Slider
+                  sx={{ mb: 3 }}
+                  defaultValue={level}
+                  step={1}
+                  onChange={(e) => setLevel(e.target.value)}
+                  marks={marks}
+                  min={1}
+                  max={5}
+                />
+              </SoftBox>
+            </SoftBox>
           </SoftBox>
-          <Slider
-            sx={{ mx: 1, mb: 3 }}
-            defaultValue={level}
-            step={1}
-            onChange={(e) => setLevel(e.target.value)}
-            marks={marks}
-            min={1}
-            max={5}
-          />
-        </SoftBox>
-        <SoftTypography
-          sx={{ color: validationErrors.a1 ? "#cc0900" : "#56a36b" }}
-          fontWeight="bold"
-        >
-          True answer*:
-        </SoftTypography>
-        <SoftInput
-          placeholder="Type here..."
-          multiline
-          sx={{ border: validationErrors.a1 ? "1px solid red" : "1px solid #ced4da" }}
-          rows={4}
-          onChange={(e) => {
-            setA1(e.target.value);
-            setValidationErrors({ ...validationErrors, a1: false });
-            if (e.target.value == "") setValidationErrors({ ...validationErrors, a1: true });
-          }}
-        />
-        <Accordion style={{ marginBottom: "50px" }}>
-          <Accordion.Item eventKey="0">
-            <Accordion.Header>
-              <SoftTypography color="dark" ml={2}>
-                Answer preview
-              </SoftTypography>
-            </Accordion.Header>
-            <Accordion.Body>
-              <div style={{ padding: "1rem", overflowY: "auto", width: "100%" }}>
-                <SoftTypography variant="h6" fontWeight="regular">
-                  <Latex displayMode>{a1}</Latex>
-                </SoftTypography>
-              </div>
-            </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
 
-        <SoftTypography sx={{ color: "#cc0900" }} fontWeight="bold">
-          False answer*:
-        </SoftTypography>
-        <SoftInput
-          placeholder="Type here..."
-          multiline
-          sx={{ border: validationErrors.a2 ? "1px solid red" : "1px solid #ced4da" }}
-          rows={4}
-          onChange={(e) => {
-            setA2(e.target.value);
-            setValidationErrors({ ...validationErrors, a2: false });
-            if (e.target.value == "") setValidationErrors({ ...validationErrors, a2: true });
-          }}
-        />
-        <Accordion style={{ marginBottom: "50px" }}>
-          <Accordion.Item eventKey="0">
-            <Accordion.Header>
-              <SoftTypography color="dark" ml={2}>
-                Answer preview
-              </SoftTypography>
-            </Accordion.Header>
-            <Accordion.Body>
-              <div style={{ padding: "1rem", overflowY: "auto", width: "100%" }}>
-                <SoftTypography variant="h6" fontWeight="regular">
-                  <Latex displayMode>{a2}</Latex>
+          <SoftBox sx={twoColumns}>
+            {answers.map((answer) => (
+              <SoftBox key={answer.key} sx={{ minWidth: 0 }}>
+                <SoftTypography
+                  sx={{
+                    color: answer.correct && !validationErrors[answer.key] ? "#56a36b" : "#cc0900",
+                  }}
+                  fontWeight="bold"
+                >
+                  {answer.label}
                 </SoftTypography>
-              </div>
-            </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
-
-        <SoftTypography sx={{ color: "#cc0900" }} fontWeight="bold">
-          False answer*:
-        </SoftTypography>
-        <SoftInput
-          placeholder="Type here..."
-          multiline
-          sx={{ border: validationErrors.a3 ? "1px solid red" : "1px solid #ced4da" }}
-          rows={4}
-          onChange={(e) => {
-            setA3(e.target.value);
-            setValidationErrors({ ...validationErrors, a3: false });
-            if (e.target.value == "") setValidationErrors({ ...validationErrors, a3: true });
-          }}
-        />
-        <Accordion style={{ marginBottom: "50px" }}>
-          <Accordion.Item eventKey="0">
-            <Accordion.Header>
-              <SoftTypography color="dark" ml={2}>
-                Answer preview
-              </SoftTypography>
-            </Accordion.Header>
-            <Accordion.Body>
-              <div style={{ padding: "1rem", overflowY: "auto", width: "100%" }}>
-                <SoftTypography variant="h6" fontWeight="regular">
-                  <Latex displayMode>{a3}</Latex>
-                </SoftTypography>
-              </div>
-            </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
-
-        <SoftTypography sx={{ color: "#cc0900" }} fontWeight="bold">
-          False answer*:
-        </SoftTypography>
-        <SoftInput
-          placeholder="Type here..."
-          multiline
-          sx={{ border: validationErrors.a4 ? "1px solid red" : "1px solid #ced4da" }}
-          rows={4}
-          onChange={(e) => {
-            setA4(e.target.value);
-            setValidationErrors({ ...validationErrors, a4: false });
-            if (e.target.value == "") setValidationErrors({ ...validationErrors, a4: true });
-          }}
-        />
-        <Accordion style={{ marginBottom: "50px" }}>
-          <Accordion.Item eventKey="0">
-            <Accordion.Header>
-              <SoftTypography color="dark" ml={2}>
-                Answer preview
-              </SoftTypography>
-            </Accordion.Header>
-            <Accordion.Body>
-              <div style={{ padding: "1rem", overflowY: "auto", width: "100%" }}>
-                <SoftTypography variant="h6" fontWeight="regular">
-                  <Latex displayMode>{a4}</Latex>
-                </SoftTypography>
-              </div>
-            </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
+                <SoftInput
+                  placeholder="Type here..."
+                  multiline
+                  sx={{
+                    border: validationErrors[answer.key] ? "1px solid red" : "1px solid #ced4da",
+                  }}
+                  rows={4}
+                  onChange={(e) => {
+                    answer.setValue(e.target.value);
+                    setValidationErrors({ ...validationErrors, [answer.key]: false });
+                    if (e.target.value == "")
+                      setValidationErrors({ ...validationErrors, [answer.key]: true });
+                  }}
+                />
+                <Accordion style={{ marginBottom: "24px" }}>
+                  <Accordion.Item eventKey="0">
+                    <Accordion.Header>
+                      <SoftTypography color="dark" variant="button" fontWeight="regular" ml={2}>
+                        Answer preview
+                      </SoftTypography>
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      <div style={{ padding: "1rem", overflowY: "auto", width: "100%" }}>
+                        <SoftTypography variant="h6" fontWeight="regular">
+                          <Latex displayMode>{answer.value}</Latex>
+                        </SoftTypography>
+                      </div>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
+              </SoftBox>
+            ))}
+          </SoftBox>
         </TopicKeywordsSelector>
 
         <SoftBox display="flex" flexDirection="row" justifyContent="flex-end" gap={2} mb={2}>

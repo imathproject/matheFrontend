@@ -3,7 +3,7 @@ import SoftBox from 'components/SoftBox';
 import SoftTypography from 'components/SoftTypography';
 import SoftButton from 'components/SoftButton';
 import SoftInput from 'components/SoftInput';
-import SearchBar from './SearchBar';
+import TopicKeywordsSelector from 'components/TopicKeywordsSelector';
 import { MuiFileInput } from 'mui-file-input';
 
 import PropTypes from "prop-types";
@@ -139,6 +139,13 @@ function AddMaterial({ onSave }) {
   }
   };
 
+  // TODO: call the keyword recommendation API with the material content
+  // (title, description, file, topic, subtopic) and return the ids of the
+  // suggested keywords, chosen among availableKeywords.
+  const suggestKeywords = async (availableKeywords) => {
+    return [];
+  };
+
   const handleFilter = (topic, subtopic, keywords) => {
     setTopic(topic);
     setSubtopic(subtopic);
@@ -149,7 +156,7 @@ function AddMaterial({ onSave }) {
     setValidationErrors({
       ...validationErrors,
       topic: !isTopicValid,
-      keywords: !isKeywordsValid,
+      keywords: validationErrors.keywords && !isKeywordsValid,
     });
   };
 
@@ -160,7 +167,7 @@ function AddMaterial({ onSave }) {
         <SoftBox sx={{display:"flex", flexDirection: "row", justifyContent:"center"}}>
           <SoftTypography variant="h6" color="error" fontWeight="light" >{errorMessage}</SoftTypography>
         </SoftBox>}
-      <SearchBar onFilter={handleFilter} topicError={validationErrors.topic} keywordsError={validationErrors.keywords}/>
+      <TopicKeywordsSelector contentName="material" onFilter={handleFilter} onSuggestKeywords={suggestKeywords} topicError={validationErrors.topic} keywordsError={validationErrors.keywords}>
       <SoftBox display="flex" flexDirection="row"
         sx={{
           '@media (max-width: 600px)': {
@@ -215,22 +222,45 @@ function AddMaterial({ onSave }) {
         }}
       />
 
-      <SoftTypography color={validationErrors.file ? "error" : "info"} fontWeight="bold">
-        Upload*
-      </SoftTypography>
-      <MuiFileInput value={file} inputProps={{ accept: "application/pdf,.pdf" }} sx={{ mb: 2, width:"100%", border: validationErrors.file ? '1px solid red' : '1px solid #ced4da', borderRadius: 2}}
-      onChange={handleChangeFile}  />
+      <SoftBox display="flex" flexDirection="row"
+        sx={{
+          '@media (max-width: 600px)': {
+              flexDirection: 'column',
+            },
+        }}>
+          <SoftBox width="50%" mr={2}
+          sx={{
+            '@media (max-width: 600px)': {
+              width:"100%",
+              mb: 2
+            },
+          }}>
+            <SoftTypography color={validationErrors.file ? "error" : "info"} fontWeight="bold">
+              Upload*
+            </SoftTypography>
+            <MuiFileInput value={file} placeholder="Choose a PDF file..." inputProps={{ accept: "application/pdf,.pdf" }} sx={{ mb: 2, width:"100%", border: validationErrors.file ? '1px solid red' : '1px solid #ced4da', borderRadius: 2}}
+            onChange={handleChangeFile}  />
+          </SoftBox>
+          <SoftBox width="50%"
+          sx={{
+            '@media (max-width: 600px)': {
+              width:"100%",
+              mb: 2
+            },
+          }}>
+            <SoftTypography color={validationErrors.link ? "error" : "info"} fontWeight="bold">
+              Link
+            </SoftTypography>
+            <SoftInput placeholder="Type here..." sx={{ mb: 2, border: validationErrors.link ? '1px solid red' : '1px solid #ced4da' }} onChange={(e) => setLink(e.target.value)} />
+          </SoftBox>
+      </SoftBox>
+      </TopicKeywordsSelector>
 
-      <SoftTypography color={validationErrors.link ? "error" : "info"} fontWeight="bold">
-        Link
-      </SoftTypography>
-      <SoftInput placeholder="Type here..." sx={{ mb: 2, border: validationErrors.link ? '1px solid red' : '1px solid #ced4da' }} onChange={(e) => setLink(e.target.value)} />
-
-      <SoftBox display="flex" flexDirection="row" justifyContent="space-between">
-        <SoftButton variant="gradient" color="success" sx={{ width: '10%' }} onClick={saveTemporaryMaterial}>
+      <SoftBox display="flex" flexDirection="row" justifyContent="flex-end" gap={2} mb={2}>
+        <SoftButton variant="outlined" color="info" sx={{ minWidth: 120 }} onClick={saveTemporaryMaterial}>
           Save
         </SoftButton>
-        <SoftButton variant="gradient" color="info" sx={{ width: '10%' }} onClick={() => saveMaterial(4)}>
+        <SoftButton variant="gradient" color="info" sx={{ minWidth: 120 }} onClick={() => saveMaterial(4)}>
           Submit
         </SoftButton>
       </SoftBox>

@@ -159,7 +159,7 @@ function Question({ level, topic, subtopic, question, status, questionID, onDele
         >
           <SoftBox bgColor={color}  borderRadius={6}>
             <SoftTypography variant="button" fontWeight="bold"  color="#344767" m={1}>
-              {index == 0 ? "True answer:" : "False answer:"}
+              {index == 0 ? "Correct answer:" : "Incorrect answer:"}
             </SoftTypography>
           </SoftBox>
           <SoftTypography variant="button" fontWeight="regular" color="#344767" m={1}>

@@ -143,13 +143,7 @@ function Main() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <SoftBox
-          sx={{
-            ...style,
-            overflowY: "scroll",
-            scrollbarColor: "rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.1)",
-          }}
-        >
+        <SoftBox sx={{ ...style, display: "flex", flexDirection: "column" }}>
           <SoftBox
             sx={{
               display: "flex",
@@ -158,6 +152,7 @@ function Main() {
               borderBottom: 1,
               borderColor: "#3447767",
               mb: 4,
+              flexShrink: 0,
             }}
           >
             <SoftTypography variant="title" fontWeight="bold">
@@ -170,9 +165,11 @@ function Main() {
               <FontAwesomeIcon icon={faX} size="4x" />
             </SoftButton>
           </SoftBox>
-          <Scrollbar noScrollX style={{ height: "80%" }}>
-            <AddVideo onSave={handleSaveVideo} />
-          </Scrollbar>
+          <SoftBox sx={{ flex: 1, minHeight: 0 }}>
+            <Scrollbar noScrollX style={{ height: "100%" }}>
+              <AddVideo onSave={handleSaveVideo} />
+            </Scrollbar>
+          </SoftBox>
         </SoftBox>
       </Modal>
 

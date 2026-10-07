@@ -147,8 +147,8 @@ function Main() {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
             >
-            <SoftBox sx={{ ...style}}>
-            <SoftBox sx={{display:"flex", flexDirection:"row", justifyContent:"space-between", borderBottom: 1, borderColor: "#3447767", mb: 4}}>
+            <SoftBox sx={{ ...style, display: "flex", flexDirection: "column"}}>
+            <SoftBox sx={{display:"flex", flexDirection:"row", justifyContent:"space-between", borderBottom: 1, borderColor: "#3447767", mb: 4, flexShrink: 0}}>
                     <SoftTypography variant="title" fontWeight="bold" >
                     Material
                     </SoftTypography>
@@ -157,9 +157,11 @@ function Main() {
                       <FontAwesomeIcon icon={faX} size="4x"/>
                     </SoftButton>
                 </SoftBox>
-                <Scrollbar noScrollX style={{ height: "80%" }}>
+                <SoftBox sx={{ flex: 1, minHeight: 0 }}>
+                <Scrollbar noScrollX style={{ height: "100%" }}>
                 <AddMaterial onSave={handleSaveMaterial}/>
                 </Scrollbar>
+                </SoftBox>
             </SoftBox>
         </Modal>
 

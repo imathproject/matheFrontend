@@ -140,9 +140,8 @@ function Main() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <SoftBox sx={{ ...style }}>
+        <SoftBox sx={{ ...style, display: "flex", flexDirection: "column" }}>
           <SoftBox
-            m={1}
             sx={{
               display: "flex",
               flexDirection: "row",
@@ -150,6 +149,7 @@ function Main() {
               borderBottom: 1,
               borderColor: "#3447767",
               mb: 4,
+              flexShrink: 0,
             }}
           >
             <SoftTypography variant="title" fontWeight="bold">
@@ -162,9 +162,11 @@ function Main() {
               <FontAwesomeIcon icon={faX} size="4x" />
             </SoftButton>
           </SoftBox>
-          <Scrollbar noScrollX style={{ height: "80%" }}>
-            <AddQuestion onSave={handleSaveQuestion} />
-          </Scrollbar>
+          <SoftBox sx={{ flex: 1, minHeight: 0 }}>
+            <Scrollbar noScrollX style={{ height: "100%" }}>
+              <AddQuestion onSave={handleSaveQuestion} />
+            </Scrollbar>
+          </SoftBox>
         </SoftBox>
       </Modal>
 

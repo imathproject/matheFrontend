@@ -567,7 +567,7 @@ function EditView({ id, onSave }) {
                 color={validationErrors.a1 ? "white" : "#344767"}
                 m={1}
               >
-                Answer: True
+                Correct answer
               </SoftTypography>
             </SoftBox>
             <div style={{ overflowY: "auto", width: "100%" }}>
@@ -608,7 +608,7 @@ function EditView({ id, onSave }) {
                 color={validationErrors.a2 ? "white" : "#344767"}
                 m={1}
               >
-                Answer: False
+                Incorrect answer
               </SoftTypography>
             </SoftBox>
             <div style={{ overflowY: "auto", width: "100%" }}>
@@ -649,7 +649,7 @@ function EditView({ id, onSave }) {
                 color={validationErrors.a3 ? "white" : "#344767"}
                 m={1}
               >
-                Answer: False
+                Incorrect answer
               </SoftTypography>
             </SoftBox>
             <div style={{ overflowY: "auto", width: "100%" }}>
@@ -689,7 +689,7 @@ function EditView({ id, onSave }) {
                 color={validationErrors.a4 ? "white" : "#344767"}
                 m={1}
               >
-                Answer: False
+                Incorrect answer
               </SoftTypography>
             </SoftBox>
             <div style={{ overflowY: "auto", width: "100%" }}>

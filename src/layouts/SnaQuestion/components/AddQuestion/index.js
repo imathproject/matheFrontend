@@ -4,7 +4,7 @@ import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import Slider from "@mui/material/Slider";
 import SoftInput from "components/SoftInput";
-import SearchBar from "./SearchBar";
+import TopicKeywordsSelector from "components/TopicKeywordsSelector";
 import { useApi } from "api";
 import levelMarks from "./data/level";
 import SoftButton from "components/SoftButton";
@@ -159,6 +159,13 @@ function AddQuestion({ onSave }) {
     }
   };
 
+  // TODO: call the keyword recommendation API with the question content
+  // (question, answers, file, topic, subtopic) and return the ids of the
+  // suggested keywords, chosen among availableKeywords.
+  const suggestKeywords = async (availableKeywords) => {
+    return [];
+  };
+
   const handleFilter = (topic, subtopic, keywords) => {
     setTopic(topic);
     setSubtopic(subtopic);
@@ -169,7 +176,7 @@ function AddQuestion({ onSave }) {
     setValidationErrors({
       ...validationErrors,
       topic: !isTopicValid,
-      keywords: !isKeywordsValid,
+      keywords: validationErrors.keywords && !isKeywordsValid,
     });
   };
 
@@ -183,11 +190,13 @@ function AddQuestion({ onSave }) {
             </SoftTypography>
           </SoftBox>
         )}
-        <SearchBar
+        <TopicKeywordsSelector
+          contentName="question"
           onFilter={handleFilter}
+          onSuggestKeywords={suggestKeywords}
           topicError={validationErrors.topic}
           keywordsError={validationErrors.keywords}
-        />
+        >
         <SoftTypography color={validationErrors.question ? "error" : "info"} fontWeight="bold">
           Question*
         </SoftTypography>
@@ -389,11 +398,13 @@ function AddQuestion({ onSave }) {
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>
-        <SoftBox display="flex" flexDirection="row" justifyContent="space-between">
+        </TopicKeywordsSelector>
+
+        <SoftBox display="flex" flexDirection="row" justifyContent="flex-end" gap={2} mb={2}>
           <SoftButton
-            variant="gradient"
-            color="success"
-            sx={{ width: "10%" }}
+            variant="outlined"
+            color="info"
+            sx={{ minWidth: 120 }}
             onClick={saveTemporaryQuestion}
           >
             Save
@@ -401,7 +412,7 @@ function AddQuestion({ onSave }) {
           <SoftButton
             variant="gradient"
             color="info"
-            sx={{ width: "10%" }}
+            sx={{ minWidth: 120 }}
             onClick={() => saveQuestion(4)}
           >
             Submit

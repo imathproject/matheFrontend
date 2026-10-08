@@ -14,9 +14,10 @@ import { getAccent, SECTIONS } from "../../accent";
 import { getQuestionSet } from "../../scoring";
 
 // A tile is its picture: out of focus until the pointer or the keyboard lands
-// on it. A model that is still to come stays out of focus and cannot be opened.
+// on it. A model that is still to come can be looked at, but not opened.
 function ModelTile({ model, description, comingSoon, accent, onSelect }) {
   const available = Boolean(model.questionnaire);
+  const { Art } = model;
 
   return (
     <ButtonBase
@@ -38,19 +39,17 @@ function ModelTile({ model, description, comingSoon, accent, onSelect }) {
           // Wider than the tile, so the blur has no soft edge to show.
           inset: "-1rem",
           zIndex: -2,
-          backgroundImage: `url(${model.image})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
           filter: "blur(6px) saturate(0.7)",
           transition: "filter 350ms ease",
+          "& svg": { display: "block", width: "100%", height: "100%" },
         },
+        // Darkens the lower half, where the name is written.
         "&::after": {
           content: '""',
           position: "absolute",
           inset: 0,
           zIndex: -1,
-          background:
-            "linear-gradient(to top, rgba(20, 23, 39, 0.85), rgba(20, 23, 39, 0.3) 60%, rgba(20, 23, 39, 0.15))",
+          background: "linear-gradient(to top, rgba(20, 23, 39, 0.75), rgba(20, 23, 39, 0) 55%)",
         },
         "&:hover, &.Mui-focusVisible": {
           transform: "translateY(-0.25rem)",
@@ -61,12 +60,17 @@ function ModelTile({ model, description, comingSoon, accent, onSelect }) {
           outline: `3px solid ${accent.text}`,
           outlineOffset: "3px",
         },
-        "&.Mui-disabled .model-image": {
-          filter: "blur(6px) grayscale(1)",
+        // A disabled button ignores the pointer; this one still answers a hover,
+        // without lifting, so its picture can be looked at.
+        "&.Mui-disabled": {
+          pointerEvents: "auto",
+          cursor: "default",
+          transform: "none",
+          boxShadow: "0 0.25rem 0.75rem rgba(20, 23, 39, 0.12)",
         },
-        // Nothing hovers on a touch screen, so there the picture starts sharp.
+        // Nothing hovers on a touch screen, so there the pictures start sharp.
         "@media (hover: none)": {
-          "&:not(.Mui-disabled) .model-image": { filter: "none" },
+          "& .model-image": { filter: "none" },
         },
         "@media (prefers-reduced-motion: reduce)": {
           transition: "none",
@@ -75,7 +79,9 @@ function ModelTile({ model, description, comingSoon, accent, onSelect }) {
         },
       }}
     >
-      <SoftBox className="model-image" />
+      <SoftBox className="model-image">
+        <Art colors={accent.art} />
+      </SoftBox>
       {!available && (
         <SoftBox
           position="absolute"
@@ -107,7 +113,7 @@ ModelTile.propTypes = {
   model: PropTypes.shape({
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
+    Art: PropTypes.elementType.isRequired,
     questionnaire: PropTypes.object,
   }).isRequired,
   description: PropTypes.string.isRequired,
@@ -122,7 +128,8 @@ function ModelSelector({ models, section, onSelect }) {
   const accent = getAccent(section);
 
   return (
-    <SoftBox>
+    // No wider than this, so the tiles keep the shape their drawings are made for.
+    <SoftBox maxWidth="64rem" mx="auto">
       <SoftTypography variant="h4" fontWeight="bold">
         {t("learning_style_page.choose_title", "Choose a questionnaire")}
       </SoftTypography>

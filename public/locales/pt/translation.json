@@ -21,7 +21,9 @@
     "manageChallenges": "Desafios",
     "manageOlympiadsChallenges": "Desafios",
     "challenge": "Desafio",
-    "olympiads-challenge": "Desafios"
+    "olympiads-challenge": "Desafios",
+    "learning-style": "Estilo de Aprendizagem",
+    "olympiads-LearningStyle": "Estilo de Aprendizagem"
   },
   "footer": {
     "mathe_project_desc": "O projeto MathE (2018-1-PT01-KA203-047361) é financiado pela Comissão Europeia através da Agência Nacional Portuguesa para o Programa Erasmus+ com o objetivo de melhorar a qualidade do ensino e aperfeiçoar as pedagogias e os métodos de avaliação.",
@@ -498,5 +500,292 @@
     "back": "Voltar ao MathE"
   },
   "get_in_touch": "Fale connosco",
-  "performance_tab": "Desempenho"
+  "performance_tab": "Desempenho",
+  "learning_style_page": {
+    "title": "Estilo de Aprendizagem",
+    "choose_title": "Escolha um questionário",
+    "choose_hint": "Responda a algumas perguntas rápidas e veja como prefere aprender.",
+    "coming_soon": "Em breve",
+    "progress": "Pergunta {{current}} de {{total}}",
+    "back": "Voltar",
+    "see_result": "Ver o meu resultado",
+    "result_title": "O seu perfil de aprendizagem",
+    "result_balanced": "Equilibrado",
+    "result_note": "São preferências, não limites.",
+    "retake": "Refazer questionário",
+    "choose_another": "Escolher outro questionário",
+    "intensity": {
+      "balanced": "Equilibrado",
+      "slight": "Preferência ligeira",
+      "moderate": "Preferência moderada",
+      "strong": "Preferência forte"
+    },
+    "balanced_summary": "Sente-se à vontade com os dois.",
+    "models": {
+      "felder_silverman": {
+        "description": "{{total}} perguntas rápidas, com duas opções cada."
+      },
+      "kolb": {
+        "description": "Um questionário baseado no ciclo de aprendizagem de Kolb."
+      }
+    },
+    "felder_silverman": {
+      "poles": {
+        "active": {
+          "name": "Ativo",
+          "summary": "Aprende melhor quando põe em prática."
+        },
+        "reflective": {
+          "name": "Reflexivo",
+          "summary": "Aprende melhor quando pensa primeiro no assunto."
+        },
+        "sensing": {
+          "name": "Sensorial",
+          "summary": "Prefere exemplos concretos e procedimentos claros."
+        },
+        "intuitive": {
+          "name": "Intuitivo",
+          "summary": "Prefere conceitos, padrões e a ideia por trás deles."
+        },
+        "visual": {
+          "name": "Visual",
+          "summary": "Prefere esquemas, gráficos e vídeos."
+        },
+        "verbal": {
+          "name": "Verbal",
+          "summary": "Prefere explicações escritas e faladas."
+        },
+        "sequential": {
+          "name": "Sequencial",
+          "summary": "Prefere avançar passo a passo."
+        },
+        "global": {
+          "name": "Global",
+          "summary": "Prefere ver primeiro a visão geral."
+        }
+      },
+      "questions": {
+        "q1": {
+          "text": "Quando não percebo uma questão de matemática, prefiro:",
+          "a": "Tentar um exercício parecido com alguma orientação.",
+          "b": "Ler uma explicação antes de tentar de novo."
+        },
+        "q2": {
+          "text": "Percebo melhor as fórmulas quando vejo:",
+          "a": "Um exemplo numérico com valores concretos.",
+          "b": "A ideia geral por trás da fórmula."
+        },
+        "q3": {
+          "text": "Antes de resolver uma questão difícil, prefiro ver:",
+          "a": "Um esquema, gráfico, imagem ou vídeo.",
+          "b": "Uma explicação escrita."
+        },
+        "q4": {
+          "text": "Quando começo um tópico novo, prefiro:",
+          "a": "Seguir o conteúdo passo a passo.",
+          "b": "Perceber primeiro a ideia geral do tópico."
+        },
+        "q5": {
+          "text": "Depois de errar, prefiro que a plataforma:",
+          "a": "Me dê logo outra questão mais fácil.",
+          "b": "Me mostre primeiro porque é que a minha resposta estava errada."
+        },
+        "q6": {
+          "text": "Prefiro questões de matemática que:",
+          "a": "Seguem um método claro ou um procedimento conhecido.",
+          "b": "Me fazem descobrir padrões ou relações."
+        },
+        "q7": {
+          "text": "Uma resolução é mais clara para mim quando tem:",
+          "a": "Os passos separados visualmente, setas ou partes destacadas.",
+          "b": "Frases escritas e detalhadas a explicar cada passo."
+        },
+        "q8": {
+          "text": "Quando fico com dúvidas, prefiro:",
+          "a": "Voltar ao passo anterior.",
+          "b": "Voltar a ver a visão geral."
+        },
+        "q9": {
+          "text": "Aprendo melhor matemática quando:",
+          "a": "Começo a praticar com exercícios o mais cedo possível.",
+          "b": "Penso no conceito antes de resolver exercícios."
+        },
+        "q10": {
+          "text": "Quando aprendo um conceito novo, prefiro:",
+          "a": "Um exemplo prático com números.",
+          "b": "Uma explicação conceptual de como a ideia funciona."
+        },
+        "q11": {
+          "text": "Lembro-me melhor das ideias matemáticas quando são apresentadas em:",
+          "a": "Esquemas, tabelas ou gráficos.",
+          "b": "Definições e descrições escritas."
+        },
+        "q12": {
+          "text": "Antes de uma avaliação, prefiro:",
+          "a": "Rever os passos básicos necessários para resolver os exercícios.",
+          "b": "Ver uma visão geral do que a avaliação aborda."
+        },
+        "q13": {
+          "text": "Quando estudo um tópico novo, costumo preferir:",
+          "a": "Resolver exemplos e aprender à medida que faço.",
+          "b": "Parar e rever a explicação com atenção."
+        },
+        "q14": {
+          "text": "Uma explicação matemática é mais clara quando:",
+          "a": "Usa os valores exatos do problema.",
+          "b": "Explica a relação entre os conceitos."
+        },
+        "q15": {
+          "text": "Quando revejo um tópico, prefiro usar:",
+          "a": "Uma videoaula ou um resumo visual.",
+          "b": "Um material de ensino com explicação escrita."
+        },
+        "q16": {
+          "text": "Aprendo melhor quando a plataforma:",
+          "a": "Mostra um pequeno conceito de cada vez.",
+          "b": "Mostra como o tópico se liga a outros tópicos."
+        },
+        "q17": {
+          "text": "Numa sessão de estudo, sinto-me mais à vontade quando posso:",
+          "a": "Interagir com as questões e receber feedback rápido.",
+          "b": "Analisar o material com calma antes de responder."
+        },
+        "q18": {
+          "text": "Quando resolvo exercícios, prefiro:",
+          "a": "Aplicar um procedimento passo a passo.",
+          "b": "Procurar o padrão ou o atalho que está por trás."
+        },
+        "q19": {
+          "text": "Quando uma fórmula é apresentada, prefiro:",
+          "a": "Uma representação visual do que ela significa.",
+          "b": "Uma explicação escrita de cada termo."
+        },
+        "q20": {
+          "text": "Quando estudo um tópico como Geometria Analítica, prefiro:",
+          "a": "Começar pelas bases e pelas operações com vetores antes dos subtópicos mais difíceis.",
+          "b": "Ver primeiro como se ligam os vetores, as retas, os planos e as distâncias."
+        },
+        "q21": {
+          "text": "Se erro uma resposta, normalmente quero:",
+          "a": "Tentar de novo com uma questão nova.",
+          "b": "Perceber primeiro a razão do erro."
+        },
+        "q22": {
+          "text": "Sinto-me mais confiante quando uma resolução mostra:",
+          "a": "Cálculos e substituições concretos.",
+          "b": "O raciocínio geral por trás do método."
+        },
+        "q23": {
+          "text": "Costumo perceber um tópico mais depressa quando a plataforma mostra:",
+          "a": "Gráficos, esquemas ou exemplos visuais.",
+          "b": "Explicações em texto e definições."
+        },
+        "q24": {
+          "text": "Um percurso de estudo é mais útil para mim quando:",
+          "a": "Me dá uma ordem fixa para seguir.",
+          "b": "Me deixa escolher num mapa de tópicos depois de ver a estrutura toda."
+        },
+        "q25": {
+          "text": "Lembro-me melhor de um método quando:",
+          "a": "O uso logo em exercícios.",
+          "b": "Revejo primeiro a lógica por trás dele."
+        },
+        "q26": {
+          "text": "Costumo preferir exemplos que são:",
+          "a": "Específicos e próximos do exercício.",
+          "b": "Gerais e ligados a ideias mais amplas."
+        },
+        "q27": {
+          "text": "Se preciso de ajuda numa questão, prefiro:",
+          "a": "Uma pista visual ou o caminho da resolução destacado.",
+          "b": "Uma pista escrita a explicar o que fazer."
+        },
+        "q28": {
+          "text": "Quando resolvo exercícios, prefiro:",
+          "a": "Questões que aumentam de complexidade aos poucos.",
+          "b": "Questões que me ajudam a perceber o tópico no seu todo."
+        },
+        "q29": {
+          "text": "Quando não tenho a certeza sobre um tópico, prefiro:",
+          "a": "Uma pista curta seguida de outra tentativa.",
+          "b": "Uma explicação mais completa antes de continuar."
+        },
+        "q30": {
+          "text": "Quando revejo uma resposta, quero saber:",
+          "a": "Que passos e números levam ao resultado.",
+          "b": "Porque é que o método escolhido funciona em geral."
+        },
+        "q31": {
+          "text": "Acho mais fácil comparar conceitos com:",
+          "a": "Uma tabela, um esquema ou um diagrama.",
+          "b": "Um parágrafo a explicar as diferenças."
+        },
+        "q32": {
+          "text": "Quando uso uma plataforma de aprendizagem, prefiro:",
+          "a": "Um percurso guiado pelo conteúdo.",
+          "b": "Um mapa geral onde vejo todos os subtópicos relacionados."
+        },
+        "q33": {
+          "text": "Numa plataforma de aprendizagem online, prefiro:",
+          "a": "Aprender a responder a questões e a ver o feedback.",
+          "b": "Aprender a rever as explicações e só depois responder."
+        },
+        "q34": {
+          "text": "Prefiro materiais de estudo que incluem:",
+          "a": "Exemplos resolvidos e procedimentos.",
+          "b": "Mapas de conceitos e ligações teóricas."
+        },
+        "q35": {
+          "text": "Quando estudo por materiais online, prefiro:",
+          "a": "Resumos visuais curtos.",
+          "b": "Apontamentos escritos e detalhados."
+        },
+        "q36": {
+          "text": "Quando um conceito é difícil, prefiro que a plataforma:",
+          "a": "O divida em passos mais pequenos.",
+          "b": "Mostre como ele se encaixa no tópico como um todo."
+        },
+        "q37": {
+          "text": "Quando vejo um exemplo resolvido, prefiro:",
+          "a": "Tentar logo um exemplo parecido.",
+          "b": "Ler o raciocínio completo antes de tentar outro."
+        },
+        "q38": {
+          "text": "Em matemática, costumo gostar de:",
+          "a": "Regras claras que posso aplicar diretamente.",
+          "b": "Ideias abstratas que explicam vários casos."
+        },
+        "q39": {
+          "text": "Um tópico difícil fica mais claro quando posso:",
+          "a": "Ver a sua estrutura de forma visual.",
+          "b": "Ler uma explicação detalhada sobre ele."
+        },
+        "q40": {
+          "text": "Sinto-me mais confiante quando a aprendizagem começa com:",
+          "a": "Um primeiro passo simples.",
+          "b": "Uma visão geral completa."
+        },
+        "q41": {
+          "text": "Sinto que aprendo mais quando a plataforma:",
+          "a": "Me mantém a praticar ativamente.",
+          "b": "Me dá tempo para rever e pensar."
+        },
+        "q42": {
+          "text": "Quando a plataforma dá feedback, prefiro que:",
+          "a": "Use um exemplo concreto da questão.",
+          "b": "Explique o conceito principal por trás da questão."
+        },
+        "q43": {
+          "text": "Quando a plataforma recomenda material de apoio, prefiro:",
+          "a": "Primeiro vídeos, imagens ou esquemas.",
+          "b": "Primeiro materiais escritos."
+        },
+        "q44": {
+          "text": "Para rever depois de um erro, prefiro:",
+          "a": "Uma correção passo a passo.",
+          "b": "Um resumo do conceito principal e das suas ligações."
+        }
+      }
+    }
+  }
 }

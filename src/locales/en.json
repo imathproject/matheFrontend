@@ -21,7 +21,9 @@
     "manageChallenges": "Challenges",
     "manageOlympiadsChallenges": "Challenges",
     "challenge": "Challenge",
-    "olympiads-challenge": "Challenges"
+    "olympiads-challenge": "Challenges",
+    "learning-style": "Learning Style",
+    "olympiads-LearningStyle": "Learning Style"
   },
   "footer": {
     "mathe_project_desc": "The MathE project (2018-1-PT01-KA203-047361) is funded by the European Commission through the Portuguese National Agency for the Erasmus+ Programme with the aim of enhancing the quality of teaching and improving pedagogies and assessment methods.",
@@ -502,5 +504,292 @@
     "back": "Back to MathE"
   },
   "get_in_touch": "Get in Touch",
-  "performance_tab": "Performance"
+  "performance_tab": "Performance",
+  "learning_style_page": {
+    "title": "Learning Style",
+    "choose_title": "Choose a questionnaire",
+    "choose_hint": "Answer a few quick questions and see how you prefer to learn.",
+    "coming_soon": "Coming soon",
+    "progress": "Question {{current}} of {{total}}",
+    "back": "Back",
+    "see_result": "See my result",
+    "result_title": "Your learning profile",
+    "result_balanced": "Balanced",
+    "result_note": "These are preferences, not limits.",
+    "retake": "Retake questionnaire",
+    "choose_another": "Choose another questionnaire",
+    "intensity": {
+      "balanced": "Balanced",
+      "slight": "Slight preference",
+      "moderate": "Moderate preference",
+      "strong": "Strong preference"
+    },
+    "balanced_summary": "You are comfortable with both.",
+    "models": {
+      "felder_silverman": {
+        "description": "{{total}} quick questions, two options each."
+      },
+      "kolb": {
+        "description": "A questionnaire based on Kolb's learning cycle."
+      }
+    },
+    "felder_silverman": {
+      "poles": {
+        "active": {
+          "name": "Active",
+          "summary": "You learn best by trying things out."
+        },
+        "reflective": {
+          "name": "Reflective",
+          "summary": "You learn best by thinking it through first."
+        },
+        "sensing": {
+          "name": "Sensing",
+          "summary": "You prefer concrete examples and clear procedures."
+        },
+        "intuitive": {
+          "name": "Intuitive",
+          "summary": "You prefer concepts, patterns and the idea behind them."
+        },
+        "visual": {
+          "name": "Visual",
+          "summary": "You prefer diagrams, graphs and videos."
+        },
+        "verbal": {
+          "name": "Verbal",
+          "summary": "You prefer written and spoken explanations."
+        },
+        "sequential": {
+          "name": "Sequential",
+          "summary": "You prefer to go step by step."
+        },
+        "global": {
+          "name": "Global",
+          "summary": "You prefer to see the big picture first."
+        }
+      },
+      "questions": {
+        "q1": {
+          "text": "When I do not understand a math question, I prefer to:",
+          "a": "Try a similar exercise with some guidance.",
+          "b": "Read an explanation before trying again."
+        },
+        "q2": {
+          "text": "I understand formulas better when I see:",
+          "a": "A numerical example using concrete values.",
+          "b": "The general idea behind the formula."
+        },
+        "q3": {
+          "text": "Before solving a difficult question, I prefer to see:",
+          "a": "A diagram, graph, image or video.",
+          "b": "A written explanation."
+        },
+        "q4": {
+          "text": "When starting a new topic, I prefer to:",
+          "a": "Follow the content step by step.",
+          "b": "First understand the general idea of the topic."
+        },
+        "q5": {
+          "text": "After making a mistake, I prefer the platform to:",
+          "a": "Give me another easier question immediately.",
+          "b": "Show me why my answer was wrong first."
+        },
+        "q6": {
+          "text": "I prefer math questions that:",
+          "a": "Follow a clear method or known procedure.",
+          "b": "Make me discover patterns or relationships."
+        },
+        "q7": {
+          "text": "A solution is clearer to me when it has:",
+          "a": "Visual separation of steps, arrows or highlighted parts.",
+          "b": "Detailed written sentences explaining each step."
+        },
+        "q8": {
+          "text": "When I get confused, I prefer:",
+          "a": "Going back to the previous step.",
+          "b": "Seeing the big picture again."
+        },
+        "q9": {
+          "text": "I learn mathematics better when I:",
+          "a": "Start practicing with exercises as soon as possible.",
+          "b": "Think about the concept before solving exercises."
+        },
+        "q10": {
+          "text": "When learning a new concept, I prefer:",
+          "a": "A practical example with numbers.",
+          "b": "A conceptual explanation of how the idea works."
+        },
+        "q11": {
+          "text": "I remember mathematical ideas better when they are presented as:",
+          "a": "Schemes, tables or graphs.",
+          "b": "Definitions and written descriptions."
+        },
+        "q12": {
+          "text": "Before an assessment, I would prefer to:",
+          "a": "Review the basic steps needed to solve the exercises.",
+          "b": "See an overview of what the assessment is about."
+        },
+        "q13": {
+          "text": "When studying a new topic, I usually prefer to:",
+          "a": "Work through examples and learn while doing.",
+          "b": "Pause and review the explanation carefully."
+        },
+        "q14": {
+          "text": "A mathematical explanation is clearer when it:",
+          "a": "Uses the exact values from the problem.",
+          "b": "Explains the relationship between concepts."
+        },
+        "q15": {
+          "text": "When reviewing a topic, I would rather use:",
+          "a": "A video lesson or visual summary.",
+          "b": "A teaching material with written explanation."
+        },
+        "q16": {
+          "text": "I learn better when the platform:",
+          "a": "Shows one small concept at a time.",
+          "b": "Shows how the topic connects with other topics."
+        },
+        "q17": {
+          "text": "During a study session, I feel more comfortable when I can:",
+          "a": "Interact with questions and receive quick feedback.",
+          "b": "Analyze the material quietly before answering."
+        },
+        "q18": {
+          "text": "When solving exercises, I prefer to:",
+          "a": "Apply a procedure step by step.",
+          "b": "Look for the underlying pattern or shortcut."
+        },
+        "q19": {
+          "text": "When a formula is introduced, I prefer:",
+          "a": "A visual representation of what it means.",
+          "b": "A written explanation of each term."
+        },
+        "q20": {
+          "text": "When studying a topic such as Analytic Geometry, I prefer to:",
+          "a": "Start with bases and vector operations before harder subtopics.",
+          "b": "See how vectors, lines, planes and distances are connected first."
+        },
+        "q21": {
+          "text": "If I get a wrong answer, I usually want to:",
+          "a": "Try again with a new question.",
+          "b": "Understand the reason for the error first."
+        },
+        "q22": {
+          "text": "I feel more confident when a solution shows:",
+          "a": "Concrete calculations and substitutions.",
+          "b": "The general reasoning behind the method."
+        },
+        "q23": {
+          "text": "I usually understand a topic faster when the platform shows:",
+          "a": "Graphs, diagrams or visual examples.",
+          "b": "Text explanations and definitions."
+        },
+        "q24": {
+          "text": "A study path is more useful to me when it:",
+          "a": "Gives me a fixed order to follow.",
+          "b": "Lets me choose from a topic map after seeing the whole structure."
+        },
+        "q25": {
+          "text": "I remember a method better when I:",
+          "a": "Use it immediately in exercises.",
+          "b": "Review the logic behind it first."
+        },
+        "q26": {
+          "text": "I usually prefer examples that are:",
+          "a": "Specific and close to the exercise.",
+          "b": "General and connected to wider ideas."
+        },
+        "q27": {
+          "text": "If I need help with a question, I prefer:",
+          "a": "A visual hint or highlighted solution path.",
+          "b": "A written hint explaining what to do."
+        },
+        "q28": {
+          "text": "When I solve exercises, I prefer:",
+          "a": "Questions that gradually increase in complexity.",
+          "b": "Questions that help me understand the overall topic."
+        },
+        "q29": {
+          "text": "When I am unsure about a topic, I prefer:",
+          "a": "A short hint followed by another attempt.",
+          "b": "A more complete explanation before continuing."
+        },
+        "q30": {
+          "text": "When I review an answer, I want to know:",
+          "a": "Which steps and numbers lead to the result.",
+          "b": "Why the chosen method works in general."
+        },
+        "q31": {
+          "text": "I find it easier to compare concepts using:",
+          "a": "A table, scheme or diagram.",
+          "b": "A paragraph explaining the differences."
+        },
+        "q32": {
+          "text": "When using a learning platform, I prefer:",
+          "a": "A guided route through the content.",
+          "b": "A general map where I can see all related subtopics."
+        },
+        "q33": {
+          "text": "In an online learning platform, I prefer to:",
+          "a": "Learn by answering questions and checking feedback.",
+          "b": "Learn by reviewing explanations and then answering."
+        },
+        "q34": {
+          "text": "I prefer learning materials that include:",
+          "a": "Worked examples and procedures.",
+          "b": "Concept maps and theoretical connections."
+        },
+        "q35": {
+          "text": "When I study from online materials, I prefer:",
+          "a": "Short visual summaries.",
+          "b": "Detailed written notes."
+        },
+        "q36": {
+          "text": "When a concept is difficult, I prefer the platform to:",
+          "a": "Break it into smaller steps.",
+          "b": "Show how it fits into the topic as a whole."
+        },
+        "q37": {
+          "text": "When I see a solved example, I prefer to:",
+          "a": "Try a similar example right away.",
+          "b": "Read the full reasoning before trying another one."
+        },
+        "q38": {
+          "text": "In mathematics, I usually like:",
+          "a": "Clear rules that I can apply directly.",
+          "b": "Abstract ideas that explain several cases."
+        },
+        "q39": {
+          "text": "A difficult topic becomes clearer when I can:",
+          "a": "See its structure visually.",
+          "b": "Read a detailed explanation about it."
+        },
+        "q40": {
+          "text": "I feel more confident when learning starts with:",
+          "a": "A simple first step.",
+          "b": "A complete overview."
+        },
+        "q41": {
+          "text": "I feel I learn more when the platform:",
+          "a": "Keeps me practicing actively.",
+          "b": "Gives me time to review and think."
+        },
+        "q42": {
+          "text": "When the platform gives feedback, I prefer it to:",
+          "a": "Use a concrete example from the question.",
+          "b": "Explain the main concept behind the question."
+        },
+        "q43": {
+          "text": "When the platform recommends support material, I prefer:",
+          "a": "Videos, images or diagrams first.",
+          "b": "Written materials first."
+        },
+        "q44": {
+          "text": "To review after a mistake, I prefer:",
+          "a": "A step-by-step correction.",
+          "b": "A summary of the main concept and its connections."
+        }
+      }
+    }
+  }
 }

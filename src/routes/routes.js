@@ -62,6 +62,7 @@ import {
   faListUl,
   faChartSimple,
   faFileSignature,
+  faBrain,
 } from "@fortawesome/free-solid-svg-icons";
 import Question from "layouts/SnaQuestion";
 import OlympicQuestion from "layouts/SnaOlympicQuestion";
@@ -69,6 +70,7 @@ import ProfileTeacher from "layouts/profileTeacher";
 import WelcomePage from "layouts/welcome";
 import OlympicWelcomePage from "layouts/olympicwelcome";
 import ChoosePlatform from "layouts/choosePlatform";
+import LearningStyle from "layouts/learningStyle";
 import OlympicHomePage from "layouts/OlympicHomePage";
 import HigherEducationHomePage from "layouts/HigherEducationHomePage";
 
@@ -156,6 +158,19 @@ const teacherRoutes = [
   },
   {
     type: "collapse",
+    name: "Learning Style",
+    key: "learning-style",
+    route: "/learning-style",
+    icon: faBrain,
+    component: (
+      <ProtectedRoute>
+        <LearningStyle />
+      </ProtectedRoute>
+    ),
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
     name: "Performance",
     key: "performance",
     route: "/performance",
@@ -176,6 +191,19 @@ const teacherRoutes = [
     component: (
       <ProtectedRoute>
         <SelfOlympicAssessment />
+      </ProtectedRoute>
+    ),
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Learning Style",
+    key: "olympiads-LearningStyle",
+    route: "/Olympiads-LearningStyle",
+    icon: faBrain,
+    component: (
+      <ProtectedRoute>
+        <LearningStyle section="olympiads" />
       </ProtectedRoute>
     ),
     noCollapse: true,

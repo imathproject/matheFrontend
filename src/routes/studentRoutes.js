@@ -50,6 +50,7 @@ import Performance from "layouts/performance";
 import WelcomePage from "layouts/welcome";
 import OlympicWelcomePage from "layouts/olympicwelcome";
 import ChoosePlatform from "layouts/choosePlatform";
+import LearningStyle from "layouts/learningStyle";
 import SelfOlympicAssessment from "layouts/selfOlympicAssessment";
 
 //Fontawesome Icons
@@ -60,6 +61,7 @@ import {
   faUser,
   faUserPlus,
   faChartSimple,
+  faBrain,
 } from "@fortawesome/free-solid-svg-icons";
 import OlympicPerformance from "layouts/olympicPerformance";
 
@@ -134,6 +136,19 @@ const studentRoutes = [
   },
   {
     type: "collapse",
+    name: "Learning Style",
+    key: "olympiads-LearningStyle",
+    route: "/Olympiads-LearningStyle",
+    icon: faBrain,
+    component: (
+      <ProtectedRoute>
+        <LearningStyle section="olympiads" />
+      </ProtectedRoute>
+    ),
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
     name: "Performance",
     key: "olympiads-Performance",
     route: "/Olympiads-Performance",
@@ -141,6 +156,19 @@ const studentRoutes = [
     component: (
       <ProtectedRoute>
         <OlympicPerformance />
+      </ProtectedRoute>
+    ),
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Learning Style",
+    key: "learning-style",
+    route: "/learning-style",
+    icon: faBrain,
+    component: (
+      <ProtectedRoute>
+        <LearningStyle />
       </ProtectedRoute>
     ),
     noCollapse: true,

@@ -48,6 +48,7 @@ import ProfileTeacher from "layouts/profileTeacher";
 import Keywords from "layouts/keywords";
 import WelcomePage from "layouts/welcome";
 import ChoosePlatform from "layouts/choosePlatform";
+import LearningStyle from "layouts/learningStyle";
 import ReviewQuestion from "layouts/reviewQuestions";
 import ReviewOlympicQuestion from "layouts/reviewOlympicQuestions";
 import ReviewVideo from "layouts/reviewVideos";
@@ -86,6 +87,7 @@ import {
   faNewspaper,
   faComments,
   faTrophy,
+  faBrain,
 } from "@fortawesome/free-solid-svg-icons";
 import { faYoutube } from "@fortawesome/free-brands-svg-icons";
 import OlympicQuestion from "layouts/SnaOlympicQuestion";
@@ -405,6 +407,19 @@ const adminRoutes = [
   },
   {
     type: "collapse",
+    name: "Learning Style",
+    key: "learning-style",
+    route: "/learning-style",
+    icon: faBrain,
+    component: (
+      <ProtectedRoute>
+        <LearningStyle />
+      </ProtectedRoute>
+    ),
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
     name: "Performance",
     key: "performance",
     route: "/performance",
@@ -415,7 +430,21 @@ const adminRoutes = [
       </ProtectedRoute>
     ),
     noCollapse: true,
-  }, {
+  },
+  {
+    type: "collapse",
+    name: "Learning Style",
+    key: "olympiads-LearningStyle",
+    route: "/Olympiads-LearningStyle",
+    icon: faBrain,
+    component: (
+      <ProtectedRoute>
+        <LearningStyle section="olympiads" />
+      </ProtectedRoute>
+    ),
+    noCollapse: true,
+  },
+  {
     type: "collapse",
     name: "Performance",
     key: "Olympiads-Performance",
